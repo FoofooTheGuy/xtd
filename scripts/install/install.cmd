@@ -8,11 +8,11 @@ echo.
 echo   Operating System is Windows
 
 :: check if administrator mode
-WHOAMI /Groups | FIND "12288" > nul 2>&1
+fsutil dirty query %systemdrive% > nul 2>&1
 IF %ERRORLEVEL% neq 0 (
-  echo You are not in administrator mode!
-  echo Run cmd as administrator before execute install.
-  exit /B 1
+echo You are not in administrator mode!
+echo Run cmd as administrator before execute install.
+exit /B 1
 )
 
 echo dowload and install wxwidgets...
