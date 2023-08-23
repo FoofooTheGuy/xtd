@@ -291,11 +291,16 @@ void application::run(const form& form) {
   if (restart_asked) {
     std::vector<ustring> command_line_args = environment::get_command_line_args();
     char** argv = new char* [command_line_args.size() + 1];
-    for (size_t index = 0; index < command_line_args.size(); index++)
-    argv[index] = command_line_args[index].data();
+	for (size_t index = 0; index < command_line_args.size(); index++) {
+        argv[index] = new char [command_line_args[index].size() + 3];//allocate string size in the array
+        sprintf(argv[index], ((command_line_args[index].find(" ") < command_line_args[index].size()) ? "\"%s\"" : "%s"), command_line_args[index].c_str());
+	}
     argv[command_line_args.size()] = 0;
     /// @todo Replace following lines by xtd::diagnostics::process...
     execv(argv[0], argv);
+	for (size_t index = 0; index < command_line_args.size(); index++) {
+        delete[] argv[index];
+    }
     delete[] argv;
     _Exit(0);
   }
