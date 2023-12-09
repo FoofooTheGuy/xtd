@@ -298,9 +298,6 @@ void application::run(const form& form) {
     argv[command_line_args.size()] = 0;
     /// @todo Replace following lines by xtd::diagnostics::process...
     execv(argv[0], argv);
-	for (size_t index = 0; index < command_line_args.size(); index++) {
-        delete[] argv[index];
-    }
     delete[] argv;
     _Exit(0);
   }
